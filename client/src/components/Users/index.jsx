@@ -1,20 +1,21 @@
 import React, { useEffect } from 'react';
 import User from '../User';
-import { fetchALLUsers } from '../../store/slices/users';
-import { useDispatch } from 'react-redux';
+import { fetchAllUsers } from '../../store/slices/users';
+import { useDispatch, useSelector } from 'react-redux';
 
 function Users() {
+  const { list: users } = useSelector((state) => state.users);
+
   const dispatch = useDispatch();
-  const user = [];
 
   useEffect(() => {
-    dispatch(fetchALLUsers());
+    dispatch(fetchAllUsers());
   }, [dispatch]);
 
   return (
-    <div className="container">
+    <div className="container mt-4">
       <div className="row">
-        {user.map((user, index) => (
+        {users.map((user, index) => (
           <User
             avatar={user.avatar}
             first_name={user.first_name}

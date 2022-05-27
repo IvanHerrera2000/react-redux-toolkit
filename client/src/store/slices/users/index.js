@@ -4,11 +4,11 @@ import axios from 'axios';
 export const userSlice = createSlice({
   name: 'users',
   initialState: {
-    users: [], // array of users
+    list: [],
   },
   reducers: {
     setUserList: (state, action) => {
-      state.users = action.payload;
+      state.list = action.payload;
     },
   },
 });
@@ -17,15 +17,11 @@ export const { setUserList } = userSlice.actions;
 
 export default userSlice.reducer;
 
-export function fetchALLUsers() {
-  return (dispatch) => {
-    axios
-      .get('https://reqres.in/api/users?page=1')
-      .then((res) => {
-        dispatch(setUserList(res.data.data));
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
-}
+export const fetchAllUsers = () => (dispatch) => {
+  axios
+    .get('https://reqres.in/api/users?per_page=12')
+    .then((response) => {
+      dispatch(setUserList(response.data.data));
+    })
+    .catch((error) => console.log(error));
+};
